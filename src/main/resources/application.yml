@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: '/blog'
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3006/blog
+    url: jdbc:mysql://127.0.0.1:3006/blog?characterEncoding=utf8
+    username: root
+    password: 12345600
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
