@@ -58,7 +58,7 @@ public class BlogController {
     }
 
     @GetMapping(value = "/search")
-    public Article search(@RequestParam("title") String title) {
-        return articleService.findOne(title);
+    public String[] search(@RequestParam("title") String title) {
+        return articleService.findArticle(title);
     }
 }

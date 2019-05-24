@@ -19,6 +19,7 @@ public class LoginController {
         UserInfo userInfo = jsonParse.readValue(user, UserInfo.class);
         User userFindOut = loginService.exist(userInfo.getUsername());
         String userName = userFindOut.getName();
+        //校验密码
         if (userName.equals((""))) {
             throw new Exception("用户不存在");
         } else {
