@@ -19,9 +19,11 @@ public class ArticleService {
      * @param userId 用户ID
      * @param title  文章标题
      * @param content 文章内容
+     * @param  type  文章类型
      * @return 文章保存到数据库后返回的内容
+     *
      */
-     public Article add(Integer userId,String title,String content){
+     public Article add(Integer userId,String title,String content,Integer type){
          //默认创建文章时star=0；
          Integer star =0;
          //获取文章创建的时候的时间戳，毫秒级
@@ -32,6 +34,7 @@ public class ArticleService {
          article.setContent(content);
          article.setStar(star);
          article.setTime(time);
+         article.setType(type);
          return  blogRepository.save(article);
      }
 

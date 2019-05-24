@@ -15,7 +15,8 @@ public class MD5Util {
              throw  new RuntimeException("没有MD5这个算法");
          }
          String md5Code = new BigInteger(1,secretText).toString(16);
-         for (int i =0;i<32-clearText.length();i++){
+         Integer md5CodeLength = md5Code.length();
+         for (int i =0;i<32-md5CodeLength;i++){
              md5Code="0"+md5Code;
          }
          return md5Code;

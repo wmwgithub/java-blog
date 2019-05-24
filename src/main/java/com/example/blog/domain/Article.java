@@ -16,8 +16,21 @@ public class Article {
     private String content;
     private Integer star;
     private Long time;
+    /**
+     * 文章类型
+     */
+    @Column(length = 1)
+    private Integer type;
     public Article(){
 
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getId() {

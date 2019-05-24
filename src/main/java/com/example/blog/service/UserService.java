@@ -25,6 +25,7 @@ public class UserService {
     public User add(String name,String pwd){
      pwd = md5Util.OnlyMD5(pwd);
      String openId = md5Util.OnlyMD5(name);
+     System.out.println(openId);
      Long time = new Date().getTime();
      User user = new User();
      user.setName(name);
@@ -34,5 +35,7 @@ public class UserService {
      user.setOpenid(openId);
      return  userRepository.save(user);
     }
-
+    public User find(String openId){
+        return userRepository.findByOpenid(openId);
+    }
 }

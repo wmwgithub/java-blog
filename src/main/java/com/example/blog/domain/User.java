@@ -12,10 +12,9 @@ public class User {
     private String password;
     @Column(unique = true)
     private String name;
-    @Column(length = 32)
+    @Column(length = 100)
     private String openid;
     private Long time;
-
     public Long getTime() {
         return time;
     }
