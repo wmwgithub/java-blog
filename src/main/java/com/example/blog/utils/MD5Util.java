@@ -21,6 +21,10 @@ public class MD5Util {
          }
          return md5Code;
     }
+    /**
+     * @saltMD5 采取密码加盐的MD5加密方式，暂时不会写，以后会了再写
+     * @return
+     */
     public  String saltMD5(){
         return  "";
     }

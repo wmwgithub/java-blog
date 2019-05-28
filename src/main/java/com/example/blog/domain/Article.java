@@ -21,10 +21,21 @@ public class Article {
      */
     @Column(length = 1)
     private Integer type;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Article(){
 
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     public Integer getType() {
         return type;
     }

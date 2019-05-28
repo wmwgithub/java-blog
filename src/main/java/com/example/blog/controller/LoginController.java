@@ -1,5 +1,6 @@
 package com.example.blog.controller;
 
+import com.example.blog.domain.Result;
 import com.example.blog.domain.User;
 import com.example.blog.domain.UserInfo;
 import com.example.blog.service.LoginService;
@@ -14,16 +15,16 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
     @PostMapping(value = "/login")
-    public User add(@RequestBody String user) throws Exception {
+    public Result add(@RequestBody String user) throws Exception {
         ObjectMapper jsonParse = new ObjectMapper();
         UserInfo userInfo = jsonParse.readValue(user, UserInfo.class);
-        User userFindOut = loginService.exist(userInfo.getUsername());
-        String userName = userFindOut.getName();
-        //校验密码
-        if (userName.equals((""))) {
-            throw new Exception("用户不存在");
-        } else {
-            return userFindOut;
-        }
+        Result userLogin = loginService.login(userInfo.getUsername(),userInfo.getPassword());
+        return  userLogin;
+    }
+    @PostMapping(value = "/register")
+    public Result register(@RequestBody String user)throws Exception{
+        ObjectMapper jsonParse = new ObjectMapper();
+        UserInfo userInfo = jsonParse.readValue(user, UserInfo.class);
+        return loginService.add(userInfo.getUsername(),userInfo.getPassword());
     }
 }

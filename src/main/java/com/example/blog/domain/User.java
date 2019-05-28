@@ -1,6 +1,7 @@
 package com.example.blog.domain;
-
 import javax.persistence.*;
+import java.util.List;
+
 
 @Entity
 @Table(name = "user")
@@ -15,10 +16,11 @@ public class User {
     @Column(length = 100)
     private String openid;
     private Long time;
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Article> article;
     public Long getTime() {
         return time;
     }
-
     public void setTime(Long time) {
         this.time = time;
     }

@@ -2,6 +2,7 @@ package com.example.blog.service;
 
 import com.example.blog.domain.Article;
 import com.example.blog.domain.Result;
+import com.example.blog.domain.User;
 import com.example.blog.repository.BlogRepository;
 import com.example.blog.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,8 @@ public class ArticleService {
      * @return 成功删除谋篇文章返回true 删除失败返回false
      */
     public Result delete(Integer articleId) {
+
+
         System.out.println(articleId);
         String errMessage = "";
         try {
@@ -89,19 +92,5 @@ public class ArticleService {
         return blogRepository.findById(id).get();
     }
 
-    /**
-     * @param title
-     * @return 返回通过文章标题查询的结果
-     */
-    public String[] findArticle(String title) {
-        StringBuilder titleArray = new StringBuilder(title);
-        Integer titleLength = titleArray.length();
-        for(int i=1,index=1;i<titleLength;i++){
-            titleArray.insert(index,"%");
-            index+=2;
-        }
-//        System.out.println(titleArray.toString()+"---------");
-        return blogRepository.findByTitleLike(titleArray.toString());
-    }
 
 }

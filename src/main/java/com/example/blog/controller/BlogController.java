@@ -2,10 +2,12 @@ package com.example.blog.controller;
 
 import com.example.blog.domain.Article;
 import com.example.blog.domain.Result;
+import com.example.blog.domain.User;
 import com.example.blog.service.ArticleService;
 import com.example.blog.service.BlogService;
+import com.example.blog.service.UserService;
+import com.example.blog.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +19,8 @@ public class BlogController {
     private BlogService blogService;
     @Autowired
     private ArticleService articleService;
-
+    @Autowired
+    private UserService userService;
     @GetMapping(value = "/total")
     public Long total(@RequestParam("userid") Integer userId) {
         return blogService.totalArticle(userId);
@@ -40,8 +43,16 @@ public class BlogController {
     }
 
     @DeleteMapping(value = "/delete")
-    public Result delete(@RequestParam("id") Integer id) {
-        return articleService.delete(id);
+    public Result deleteArticle(@RequestParam("id") Integer id,
+                         @RequestParam("userid") Integer userid,
+                         @RequestParam("password") String password) {
+        //删除之前先验证用户名密码是否正确 确认是不是本人操作
+        System.out.println(userid);
+        Boolean detection = userService.detectionUser(userid,password);
+       if (detection){
+          return  articleService.delete(id);
+       }
+        return  ResultUtil.fail(-1,"用户名密码错误");
     }
 
     @PostMapping(value = "/update")
@@ -57,8 +68,5 @@ public class BlogController {
 
     }
 
-    @GetMapping(value = "/search")
-    public String[] search(@RequestParam("title") String title) {
-        return articleService.findArticle(title);
-    }
+
 }
