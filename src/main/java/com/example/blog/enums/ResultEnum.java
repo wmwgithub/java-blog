@@ -5,7 +5,8 @@ public enum ResultEnum {
     SUCCESS(1,"成功"),
     USER_INEXISTENCE(400,"用户不存在"),
     USER_ERROR(401,"用户名或密码错误"),
-    USER_ALREADY_EXIST(402,"用户已经存在")
+    USER_ALREADY_EXIST(402,"用户已经存在"),
+    USER_LIMITED(403,"用户权限不足")
     ;
 
     private Integer code;

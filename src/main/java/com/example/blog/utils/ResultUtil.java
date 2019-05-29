@@ -14,11 +14,16 @@ public class ResultUtil {
     public static Result success(){
           return  success(null);
     }
-    /**暂时 不把fail状态信息封装进 ResultEnum**/
     public static Result  fail(Integer code,String message){
         Result result = new Result();
         result.setCode(code);
         result.setMessage(message);
+        return  result;
+    }
+    public static Result  fail(ResultEnum resultEnum){
+        Result result = new Result();
+        result.setCode(resultEnum.getCode());
+        result.setMessage(resultEnum.getMessage());
         return  result;
     }
 }

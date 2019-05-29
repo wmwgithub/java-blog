@@ -54,19 +54,22 @@ public class BlogController {
        }
         return  ResultUtil.fail(-1,"用户名密码错误");
     }
-
     @PostMapping(value = "/update")
-    public Article update(@RequestParam("id") Integer id,
+    public Article update(@RequestParam("articleId") Integer articleId,
                           @RequestParam("title") String title,
-                          @RequestParam("content") String content) {
-        return articleService.update(id, title, content);
+                          @RequestParam("content") String content,
+                          @RequestParam("type")Integer type,
+                          @RequestParam("userid") Integer userId) {
+        return articleService.update(articleId, title, content,type,userId);
     }
 
     @GetMapping(value = "/article")
     public Article articleFindOne(@RequestParam("id") Integer id) {
         return articleService.findOne(id);
-
     }
-
+   @PostMapping(value = "/modify")
+    public Result modify(@RequestParam("articleId") Integer articleId,@RequestParam("openid") String openid){
+        return articleService.modifyArticle(articleId,openid);
+   }
 
 }

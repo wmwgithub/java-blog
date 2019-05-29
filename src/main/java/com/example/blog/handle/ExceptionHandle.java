@@ -1,6 +1,7 @@
 package com.example.blog.handle;
 
 import com.example.blog.domain.Result;
+import com.example.blog.enums.ResultEnum;
 import com.example.blog.exception.BlogException;
 import com.example.blog.utils.ResultUtil;
 import org.slf4j.Logger;
@@ -24,6 +25,6 @@ public class ExceptionHandle {
         //所有异常都被捕获 所以要通过日志打印 让异常信息完整显示在控制台
         logger.error("未定义异常::: ",e);
         //未知异常 返回回如下
-        return ResultUtil.fail(-1,e.getMessage());
+        return ResultUtil.fail(ResultEnum.UNDEFINED_ERROR);
     }
 }

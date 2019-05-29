@@ -3,7 +3,10 @@ package com.example.blog.service;
 import com.example.blog.domain.Article;
 import com.example.blog.domain.Result;
 import com.example.blog.domain.User;
+import com.example.blog.enums.ResultEnum;
+import com.example.blog.exception.BlogException;
 import com.example.blog.repository.BlogRepository;
+import com.example.blog.repository.UserRepository;
 import com.example.blog.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ import java.util.Date;
 public class ArticleService {
     @Autowired
     private BlogRepository blogRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * 增
@@ -49,7 +54,6 @@ public class ArticleService {
      */
     public Result delete(Integer articleId) {
 
-
         System.out.println(articleId);
         String errMessage = "";
         try {
@@ -73,12 +77,16 @@ public class ArticleService {
      * @param content 新文章内容
      * @return 文章成功更新后的信息
      */
-    public Article update(Integer id, String title, String content) {
+    public Article update(Integer articleId, String title, String content, Integer type, Integer userId) {
         Long time = new Date().getTime();
-        Article article = blogRepository.findById(id).get();
+        Article article = blogRepository.findById(articleId).get();
+        if (article.getUserid() != userId) {
+            throw new BlogException(ResultEnum.USER_LIMITED);
+        }
         article.setTitle(title);
         article.setContent(content);
         article.setTime(time);
+        article.setType(type);
         return blogRepository.save(article);
     }
 
@@ -92,5 +100,19 @@ public class ArticleService {
         return blogRepository.findById(id).get();
     }
 
+    public Result modifyArticle(Integer articleId, String openid) {
+        //拿到文章信息
+        Article article = blogRepository.findById(articleId).get();
+        //获取文章作者id
+        Integer userId = article.getUserid();
+        String openId = userRepository.findOpenidById(userId);
+        if (openId.equals(openid)) {
+            //openid一样说明是本人操作 返回文章信息
+            return ResultUtil.success(article);
+        } else {
+            //否则返回错误信息
+            return ResultUtil.fail(ResultEnum.USER_LIMITED);
+        }
+    }
 
 }

@@ -10,8 +10,6 @@ import java.util.List;
 
 @Component
 public interface BlogRepository extends JpaRepository<Article, Integer> {
-
-
     @Query(value = "select article from  Article article where article.title like concat('%',:title,'%') ")
     public List<Article> findArticleByTitleLike(@Param("title") String title);
 
@@ -22,11 +20,7 @@ public interface BlogRepository extends JpaRepository<Article, Integer> {
     public Long countByUserid(Integer userId);
 
     /**
-     * @param Id
-     * @return 查找数据库中指定id的下一条数据
-     */
-    /**
-     * 自闭 Article  不可以 List<Article> 可以
+     * 自闭 两表连查结果类型写Article 不可以 ，List<Article> 可以。。。
      **/
     @Query(value = "select * from  article where id> :id LIMIT 1", nativeQuery = true)
     public List<Article> findNext(@Param("id") Integer Id);
@@ -36,4 +30,5 @@ public interface BlogRepository extends JpaRepository<Article, Integer> {
 
     @Query(value = "select article.id,article.title,article.content,article.time,article.star,user.name,user.avatar from article left join user on article.userid=user.id where article.id=:Id", nativeQuery = true)
     public Object getArticleInfo(Integer Id);
+
 }
